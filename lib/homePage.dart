@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:live_app_api_5decembre/controller/toycontroller.dart';
+import 'model/toy.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -8,15 +11,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final monController = ToyController();
+
+  // on va faire appell à un widget FutureBuilder qui va construire une liste quand il aura récupéré les données.
+ final _controller = ToyController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-      title: Text("Boardgames"),
-    ),
-    body: Center(child: Text("Content de mon app",style: TextStyle(
-      fontSize: 20,
-      color: Colors.red
-    ),)),
+    return Scaffold(
+      appBar: AppBar(title: Text("BOAD GAMes")),
+      body: FutureBuilder<List<Toy>>(
+      future: _controller.fetchToys(),  // <====== le controleur récupère les données 
+      builder:(context, snapshot) {
+      final toys = snapshot.data;
+    
+      if (toys == null){
+        return  Center(child: Container(child: Column(children: [
+          CircularProgressIndicator(),
+          Text("Chargement des données")
+        ]),));
+      }
+      return Text(toys.toString());
+    })
     );
-  }
-}
+  }}
+
