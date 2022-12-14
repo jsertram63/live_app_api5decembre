@@ -31,7 +31,17 @@ class _HomePageState extends State<HomePage> {
           Text("Chargement des données")
         ]),));
       }
-      return Text(toys.toString());
+      return ListView.separated(
+        itemBuilder: ((context, index) {
+          return ListTile(title: Text(toys[index].name),);
+        }),
+         separatorBuilder:((context, index) => const Divider(
+          height: 5,
+          color: Colors.grey,
+          endIndent: 50,
+          indent: 50,
+         ) ),
+          itemCount: toys.length);
     })
     );
   }}
