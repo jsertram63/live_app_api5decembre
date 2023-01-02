@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:live_app_api_5decembre/controller/toycontroller.dart';
-import 'model/toy.dart';
+import 'package:live_app_api_5decembre/toyDetails.dart';
+
+import 'model/Toy.dart';
 
 
 
@@ -33,16 +35,45 @@ class _HomePageState extends State<HomePage> {
       }
       return ListView.separated(
         itemBuilder: ((context, index) {
-          return ListTile(title: Text(toys[index].name),);
+          return 
+          _buildrows(toys[index]);
         }),
          separatorBuilder:((context, index) => const Divider(
-          height: 5,
+          height: 10,
           color: Colors.grey,
+          thickness: 2,
           endIndent: 50,
           indent: 50,
          ) ),
           itemCount: toys.length);
     })
     );
-  }}
+  }
+
+  Widget _buildrows(Toy toy){
+    return ListTile(
+
+      onTap: (){
+        // la fonction callback quand on va taper sur une cellule 
+        // afficher la vue détail 
+        Navigator.of(context).push<MaterialPage>(
+          MaterialPageRoute(builder: (context) => ToyDetailPage(toyParse: toy))
+
+        );
+
+      },
+      title: Text(toy.name, style: const TextStyle(fontSize: 14),),
+      subtitle: Text(toy.description),
+      leading:Image.network(toy.img),
+   
+     
+
+
+
+    );
+
+  }  
+  
+  
+}
 

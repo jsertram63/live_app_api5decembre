@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:live_app_api_5decembre/model/toy.dart';
+import 'package:live_app_api_5decembre/model/Toy.dart';
 import 'package:live_app_api_5decembre/model/repository.dart';
 import 'package:http/http.dart' as http;
 
