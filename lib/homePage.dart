@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:live_app_api_5decembre/ajout_jouet.dart';
 import 'package:live_app_api_5decembre/controller/toycontroller.dart';
 import 'package:live_app_api_5decembre/toyDetails.dart';
 
@@ -22,6 +23,45 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("BOAD GAMes")),
+      drawer: Drawer(
+        child: ListView(children: [
+          DrawerHeader(decoration:BoxDecoration(
+          color: Colors.blue
+          ), child: Column(
+            children: [
+              CircleAvatar(
+               backgroundImage: AssetImage('assets/jeu.png'),
+               radius: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text('Board Games', 
+                style: TextStyle(fontSize: 18,
+                color: Colors.white,
+                fontWeight: FontWeight.w800
+                
+                ),),
+              ),
+            ],
+          ) ,),
+
+          ListTile(title:Text("Liste De jouets"),
+          onTap: (){
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => HomePage()
+            ));
+          },),
+          ListTile(title: Text("Ajout jouet"),
+            onTap:(){
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => AjoutJouet())
+              );
+            },
+          )
+        ],
+    
+        ),
+      ),
       body: FutureBuilder<List<Toy>>(
       future: _controller.fetchToys(),  // <====== le controleur récupère les données 
       builder:(context, snapshot) {
