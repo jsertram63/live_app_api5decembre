@@ -16,6 +16,7 @@ class _FormulaireState extends State<Formulaire> {
 // on va gérer notre formulaire avec un controller
 final _controller = ToyController();
 late ToyModel _modelToy;
+final  formKey = GlobalKey<FormState>();
 
 @override
   void initState() {
@@ -30,81 +31,93 @@ late ToyModel _modelToy;
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-        // empilement de TextField
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value){
-              _modelToy.name = value;
-            },
-            decoration: InputDecoration(hintText: "Entrez nom du jouet",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value){
-              _modelToy.description = value;
-            },
-            decoration: InputDecoration(hintText: "Entrez la description du jouet",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value){
-              _modelToy.price;
-            },
-            decoration: InputDecoration(hintText: "Entrez le prix du jouet",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value){
-              _modelToy.reference;
-            },
-            decoration: InputDecoration(hintText: "Entrez la référence du jouet",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value){
-              _modelToy.age = value;
-            },
-            decoration: InputDecoration(hintText: "Age des joueurs",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: ((value) => _modelToy.nbPlayers = value),
-            decoration: InputDecoration(hintText: "Nombre de joueurs",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value) => _modelToy.timing = value,
-            decoration: InputDecoration(hintText: "Temps de jeu",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
-        ElevatedButton(onPressed: ()async{
-          // on met un async car ca sera suivi d'un await pour faire
-          // notre requete réseau (POST)
-        }, child: Text("Valider"))
+    return SingleChildScrollView(
+      child: Form(
+        key: formKey,
+        child: Column(children: [
+            // empilement de TextField
+            Padding(
+              padding: const EdgeInsets.all(8.0),
       
-
-
-      ],);
+              child: TextField(
+                onChanged: (value){
+                  _modelToy.name = value;
+                },
+                decoration: InputDecoration(hintText: "Entrez nom du jouet",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value){
+                  _modelToy.description = value;
+                },
+                decoration: InputDecoration(hintText: "Entrez la description du jouet",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value){
+                  _modelToy.price;
+                },
+                decoration: InputDecoration(hintText: "Entrez le prix du jouet",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value){
+                  _modelToy.reference;
+                },
+                decoration: InputDecoration(hintText: "Entrez la référence du jouet",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value){
+                  _modelToy.age = value;
+                },
+                decoration: InputDecoration(hintText: "Age des joueurs",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: ((value) => _modelToy.nbPlayers = value),
+                decoration: InputDecoration(hintText: "Nombre de joueurs",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (value) => _modelToy.timing = value,
+                decoration: InputDecoration(hintText: "Temps de jeu",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+              ),
+            ),
+            ElevatedButton(onPressed: ()async{
+              // on met un async car ca sera suivi d'un await pour faire
+              // notre requete réseau (POST)
+              await _controller.createToys(_modelToy!);
+              Navigator.pop(context);
+              
+          
+          
+          
+            }, child: Text("Valider"))
+          
+          
+          
+          ],),
+      ),
+    );
   }
 }

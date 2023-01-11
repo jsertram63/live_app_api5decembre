@@ -32,7 +32,7 @@ class ToyRepository implements Repository {
   @override
   Future postToys(ToyModel model) async {
     // TODO: implement postToys
-    throw UnimplementedError();
+    
     final url = Uri.parse(dataUrl2);
     final headers = {"content-type":"application/json"};
     final response = await http.post(url, headers: headers,
