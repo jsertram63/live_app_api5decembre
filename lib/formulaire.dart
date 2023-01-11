@@ -39,12 +39,13 @@ final  formKey = GlobalKey<FormState>();
             Padding(
               padding: const EdgeInsets.all(8.0),
       
-              child: TextField(
+              child: TextFormField(
                 onChanged: (value){
                   _modelToy.name = value;
                 },
                 decoration: InputDecoration(hintText: "Entrez nom du jouet",
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+                validator: (value) => value != null && value.isEmpty ? 'Entrez le nom du jouet' : null
               ),
             ),
             Padding(
@@ -106,8 +107,13 @@ final  formKey = GlobalKey<FormState>();
             ElevatedButton(onPressed: ()async{
               // on met un async car ca sera suivi d'un await pour faire
               // notre requete réseau (POST)
+              final form = formKey.currentState!;
+              final isValide = form.validate();
+
+              if (isValide){
               await _controller.createToys(_modelToy!);
               Navigator.pop(context);
+              }
               
           
           
